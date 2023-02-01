@@ -14,7 +14,7 @@ export default function Avatar() {
 const styles = StyleSheet.create({
     avatarStyle: {
         width: 60,
-        heigth: undefined,
+        height: undefined,
         resizeMode: 'cover',
         aspectRatio: 1,
         borderRadius: 30,

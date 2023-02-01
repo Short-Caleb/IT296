@@ -5,7 +5,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import AntDesign from '@expo/vector-icons/AntDesign'
 
 
-export default function VideoPost(props) {
+export default function VideoPlayer(props) {
 
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
