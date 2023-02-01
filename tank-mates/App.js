@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View, FlatList } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, FlatList, Image } from 'react-native';
 import Avatar from './componets/Avatar';
 import VideoPost from './componets/VideoPost';
 
@@ -25,7 +25,7 @@ export default function App() {
         <View style={styles.avatarCol}>
           <Avatar/>
         </View>
-       <View style={otherCol}>
+       <View style={styles.otherCol}>
        <Text style={styles.textBold}>{item.user}</Text>
         <Text style={styles.text}>{item.text}</Text>
 
@@ -36,7 +36,7 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
         <FlatList 
         style={styles.feedList}
         data={feedData}
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     alignItems: 'center',
-    justifyContent: 'center',
+   marginTop: 30,
   },
   feedList: {
     width: '100%',
@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
   otherCol:{
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
     flex: 1,
     backgroundColor: 'black',
   },

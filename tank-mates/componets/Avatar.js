@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import icon from '../assets/icon.png'
+import batman from '../assets/batman_90804.png'
 
 export default function Avatar() {
   return (
     <View>
-      <Image style={styles.avatarStyle} source={icon}/>
+      <Image style={styles.avatarStyle} source={batman}/>
     </View>
   )
 }
@@ -13,11 +13,11 @@ export default function Avatar() {
 
 const styles = StyleSheet.create({
     avatarStyle: {
-        width: '100%',
+        width: 60,
         heigth: undefined,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         aspectRatio: 1,
-        borderRadius: '50%',
+        borderRadius: 30,
         
         
     }
