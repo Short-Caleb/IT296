@@ -1,9 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View, FlatList, Image,  } from 'react-native';
 import Avatar from './componets/Avatar';
+import { InteractionStrip } from './componets/interactionStrip';
 import VideoPlayer from './componets/VideoPost';
 import VideoPost from './componets/VideoPost';
 import { Weblink } from './componets/Weblink';
+
+
 
 
 export default function App() {
@@ -34,7 +37,9 @@ export default function App() {
         {item.webLink !== '' ? <Weblink link={item.webLink}/> : ''}
 
         { item.videoLink  !== '' ? (<VideoPlayer video={item.videoLink} />) : ''}
+        <InteractionStrip />
         </View>
+      
       </View>
     )
   }
@@ -83,6 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flex: 1,
     backgroundColor: 'black',
+    
   },
   textBold: {
     color: 'white',
@@ -91,5 +97,8 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
   },
-  
+  strip: {
+    marginTop: 10,
+    paddingTop: 10,
+  }
 });
