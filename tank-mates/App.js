@@ -1,59 +1,28 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View, FlatList, Image,  } from 'react-native';
-import Avatar from './componets/Avatar';
+import Avatar from './componets/Avatar'
 import { InteractionStrip } from './componets/interactionStrip';
 import VideoPlayer from './componets/VideoPost';
 import VideoPost from './componets/VideoPost';
 import { Weblink } from './componets/Weblink';
-
+import { Main } from './screens/Main';
 
 
 
 export default function App() {
 
-  const feedData = [
-    {id: 1, text: 'this is the post number 1', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', webLink: '', user: 'Caleb Short', avatar: ''},
-    {id: 2, text: 'this is the post number 2', videoLink: '', webLink: 'http://www.google.com', user: 'Caleb Short', avatar: '' }, 
-    {id: 3, text: 'this is the post number 3', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-    {id: 4, text: 'this is the post number 4', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', webLink: '', user: 'Caleb Short', avatar: '' },
-    {id: 5, text: 'this is the post number 5', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-    {id: 6, text: 'this is the post number 6', videoLink: '', webLink: 'http://www.espn.com', user: 'Caleb Short', avatar: '' },
-    {id: 7, text: 'this is the post number 7', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-    {id: 8, text: 'this is the post number 8', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', webLink: 'http://http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', user: 'Caleb Short', avatar: '' },
-    {id: 9, text: 'this is the post number 9', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-  
-  
-  ];
-
-  const renderItem = ({item, index}) => {
-    return (
-      <View style={styles.postView}>
-        <View style={styles.avatarCol}>
-          <Avatar/>
-        </View>
-       <View style={styles.otherCol}>
-       <Text style={styles.textBold}>{item.user}</Text>
-        <Text style={styles.text}>{item.text}</Text>
-        {item.webLink !== '' ? <Weblink link={item.webLink}/> : ''}
-
-        { item.videoLink  !== '' ? (<VideoPlayer video={item.videoLink} />) : ''}
-        <InteractionStrip />
-        </View>
-      
-      </View>
-    )
-  }
+ const Stack = createNativeStackNavigator()
 
   return (
-    <SafeAreaView style={styles.container}>
-        <FlatList 
-        style={styles.feedList}
-        data={feedData}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        />
-    </SafeAreaView>
-  );
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={Main} screenOptions={{headerShown: false}}>
+      <Stack.Screen name='Main' component={Main} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  
+    );
 }
 
 const styles = StyleSheet.create({
