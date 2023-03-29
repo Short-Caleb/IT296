@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#000',
       alignItems: 'center',
-     marginTop: 30,
+      marginTop: 30,
     },
     feedList: {
       width: '100%',

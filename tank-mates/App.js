@@ -8,7 +8,7 @@ import VideoPlayer from './componets/VideoPost';
 import VideoPost from './componets/VideoPost';
 import { Weblink } from './componets/Weblink';
 import { Main } from './screens/Main';
-
+import { NewPost } from './screens/NewPost';
 
 
 export default function App() {
@@ -17,8 +17,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={Main} screenOptions={{headerShown: false}}>
+      <Stack.Navigator initialRouteName={NewPost} screenOptions={{headerShown: false}}>
+      <Stack.Screen name= 'NewPost' component={NewPost}/>
       <Stack.Screen name='Main' component={Main} />
+      
       </Stack.Navigator>
     </NavigationContainer>
   
