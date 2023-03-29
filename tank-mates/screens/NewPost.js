@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -6,26 +6,28 @@ import { Entypo } from '@expo/vector-icons';
 
 export const NewPost = () => {
   
+  const [post, setPost ] = useState({}); 
   const [postText , setPostText] = useState('');
-  
+  const [videoLink, setVideoLink] = useState('');
+  const [ picLink, setPicLink] = useState('');
+  const [ webLink, setWebLink] = useState('');
+
+  const inputRef = useRef(null);
+
+
+
+  useEffect( () => {
+    inputRef.current.focus();
+   }, []);
   
     return (
     <SafeAreaView style={styles.container}>
      
 
      <View style={styles.post}>
-       <Text style={styles.text}> {postText}</Text>
+        <Text style={styles.title}>NEW POST</Text>
+       <Text style={styles.text}>{postText}</Text>
      </View>
-     <View style={styles.input}>
-        <TextInput
-        style={styles.textbox}
-            editable
-            numberOfLines={4}
-            maxLength={240}
-            onChangeText={setPostText}
-            value={postText}
-        />
-     </View> 
      <View style={styles.iconRow} >
         <View style={styles.icons}>
         <FontAwesome5 name="link" size={24} color="white" />
@@ -34,6 +36,18 @@ export const NewPost = () => {
         </View>
         <Button title='Submit'></Button>
      </View>
+     <View style={styles.input}>
+        <TextInput
+        style={styles.textbox}
+            ref={inputRef}
+            editable
+            numberOfLines={4}
+            maxLength={240}
+            onChangeText={setPostText}
+            value={postText}
+        />
+     </View> 
+   
     </SafeAreaView>
   )
 }
@@ -51,7 +65,7 @@ const styles = StyleSheet.create({
     },
     post: {
         marginHorizontal: 10,
-        flex: 3,
+        flex: 4,
         width: '100%',
         borderBottomColor: 'white',
         borderBottomWidth: 1,
@@ -59,7 +73,7 @@ const styles = StyleSheet.create({
     },
 
         input: { 
-            flex: 1,
+            flex: 2,
             borderColor: 'white',
             borderWidth: 2,
             borderRadius: 2,
@@ -76,9 +90,11 @@ const styles = StyleSheet.create({
     textbox: {
         color: 'white',
         fontSize: 14,
-        backgroundColor: 'gray'
+        backgroundColor: 'gray',
+        textAlign: 'vertical',
     },
     iconRow: {
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
@@ -90,5 +106,10 @@ const styles = StyleSheet.create({
         width: '30%',
         justifyContent: 'space-between',
         
-    }
+    },
+    title: {
+        color: 'white',
+        fontSize: 28,
+        fontWeight: 'bold',
+    },
 })

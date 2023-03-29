@@ -17,10 +17,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={NewPost} screenOptions={{headerShown: false}}>
-      <Stack.Screen name= 'NewPost' component={NewPost}/>
+      <Stack.Navigator initialRouteName={Main} screenOptions={{headerShown: false}}>
       <Stack.Screen name='Main' component={Main} />
-      
+      <Stack.Screen name= 'NewPost' component={NewPost}/>
       </Stack.Navigator>
     </NavigationContainer>
   

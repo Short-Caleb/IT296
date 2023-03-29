@@ -13,7 +13,7 @@ import { Weblink } from '../componets/Weblink';
 
 
 
-export const Main = () => {
+export const Main = ({navigation}) => {
 
 
     const feedData = [
@@ -57,7 +57,7 @@ export const Main = () => {
     renderItem={renderItem}
     keyExtractor={item => item.id}
     />
-    <FloatingActionJackson pressHandler={ () => {console.log("Action Jackson Baby!!!!!")}} />
+    <FloatingActionJackson pressHandler={() => navigation.navigate('NewPost')} />
 </SafeAreaView>
 
 
