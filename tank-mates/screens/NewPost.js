@@ -7,7 +7,7 @@ import { Entypo } from '@expo/vector-icons';
 import {Video,  AVPlaybackStatus } from 'expo-av'
 import { Context } from '../Context';
 
-export const NewPost = () => {
+export const NewPost = ({navigation}) => {
   
 const data = useContext(Context)
 
@@ -17,8 +17,7 @@ const data = useContext(Context)
   const [ picLink, setPicLink] = useState('');
   const [ webLink, setWebLink] = useState('');
   const [modalvisible, setModalVisible] = useState(false)  
-  const [image, setImage] = useState(null);
-  const [video, setVideo] = useState(null)
+
   const inputRef = useRef(null);
 
 const pickImage = async () => {
@@ -30,8 +29,8 @@ const pickImage = async () => {
         console.log(result);
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
-            setVideo('');
+            setPicLink(result.assets[0].uri);
+            setVideoLink('');
         }
 }
 
@@ -44,8 +43,8 @@ const pickVideo = async () => {
         console.log(result);
 
         if (!result.canceled) {
-            setVideo(result.assets[0].uri);
-            setImage('');
+            setVideoLink(result.assets[0].uri);
+            setPicLink('');
         }
 }
 
@@ -56,8 +55,8 @@ const pickVideo = async () => {
   
   const submitPost = () => {
     let newpost = {
-         id: 8,
-         text: 'this is the post number 8',
+         id: data.length+1,
+         text: postText,
          picLink: picLink,
          videoLink: videoLink,
          webLink: webLink,
@@ -65,6 +64,9 @@ const pickVideo = async () => {
          avatar: '' 
     }
     data.push(newpost)
+
+    navigation.navigate('Main');
+    console.log('Posting your posty post');
   }
 
 
@@ -76,8 +78,8 @@ const pickVideo = async () => {
         <Text style={styles.title}>NEW POST</Text>
        <Text style={styles.text}>{postText}</Text>
        <Text style={styles.linktext}>{webLink}</Text>
-       <Text>{image && <Image source={{uri: image}} style={styles.image} />}</Text>
-       <Text>{video && <Video source={{uri: video}} style={styles.image} />} </Text>
+       {picLink && <Image source={{uri: picLink}} style={styles.image} />}
+       {videoLink && <Video source={{uri: videoLink}} style={styles.image} />} 
      </View>
      <Modal
         animationType='slide'
@@ -131,11 +133,8 @@ const pickVideo = async () => {
         <Entypo name="video-camera" size={24} color="white" />
         </Pressable>
         </View>
-        <Pressable>
-            onPress={submitPost}
-            <Button title='Submit'></Button>
-        </Pressable>
        
+        <Button title='Submit'  onPress={submitPost} ></Button>
      </View>
      
      <View style={styles.input}>
