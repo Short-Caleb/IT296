@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { SafeAreaView, View, Text, StyleSheet, TextInput, Button, Alert, Modal, Pressable, ImagePickerIOS, Image } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import {Video,  AVPlaybackStatus } from 'expo-av'
-
+import { Context } from '../Context';
 
 export const NewPost = () => {
   
+const data = useContext(Context)
+
   const [post, setPost ] = useState({}); 
   const [postText , setPostText] = useState('');
   const [videoLink, setVideoLink] = useState('');
@@ -28,7 +30,8 @@ const pickImage = async () => {
         console.log(result);
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri)
+            setImage(result.assets[0].uri);
+            setVideo('');
         }
 }
 
@@ -41,7 +44,8 @@ const pickVideo = async () => {
         console.log(result);
 
         if (!result.canceled) {
-            setVideo(result.assets[0].uri)
+            setVideo(result.assets[0].uri);
+            setImage('');
         }
 }
 
@@ -50,7 +54,18 @@ const pickVideo = async () => {
     inputRef.current.focus();
    }, []);
   
-
+  const submitPost = () => {
+    let newpost = {
+         id: 8,
+         text: 'this is the post number 8',
+         picLink: picLink,
+         videoLink: videoLink,
+         webLink: webLink,
+         user: 'Caleb Short', 
+         avatar: '' 
+    }
+    data.push(newpost)
+  }
 
 
     return (
@@ -116,7 +131,11 @@ const pickVideo = async () => {
         <Entypo name="video-camera" size={24} color="white" />
         </Pressable>
         </View>
-        <Button title='Submit'></Button>
+        <Pressable>
+            onPress={submitPost}
+            <Button title='Submit'></Button>
+        </Pressable>
+       
      </View>
      
      <View style={styles.input}>
@@ -247,6 +266,7 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
+        alignSelf: 'center'
       },
 
 })

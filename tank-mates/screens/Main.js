@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { SafeAreaView, StyleSheet, Text, View, FlatList, Image,  } from 'react-native';
 import Avatar from '../componets/Avatar';
 import { FloatingActionJackson } from '../componets/FloatingActionJackson';
@@ -6,7 +6,8 @@ import { InteractionStrip } from '../componets/interactionStrip';
 import VideoPlayer from '../componets/VideoPost';
 import VideoPost from '../componets/VideoPost';
 import { Weblink } from '../componets/Weblink';
-
+import { useState } from 'react';
+import { Context } from '../Context';
 
 
 
@@ -15,6 +16,7 @@ import { Weblink } from '../componets/Weblink';
 
 export const Main = ({navigation}) => {
 
+   const data = useContext(Context);
 
     const feedData = [
         {id: 1, text: 'this is the post number 1', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', webLink: '', user: 'Caleb Short', avatar: ''},
@@ -30,6 +32,9 @@ export const Main = ({navigation}) => {
       
       ];
     
+     
+
+
       const renderItem = ({item, index}) => {
         return (
           <View style={styles.postView}>
@@ -53,7 +58,7 @@ export const Main = ({navigation}) => {
     <SafeAreaView style={styles.container}>
     <FlatList 
     style={styles.feedList}
-    data={feedData}
+    data={data}
     renderItem={renderItem}
     keyExtractor={item => item.id}
     />
