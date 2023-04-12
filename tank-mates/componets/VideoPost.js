@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect, } from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import AntDesign from '@expo/vector-icons/AntDesign'
-
+import { FullScreenActionButton } from './FullScreenActionButton';
 
 export default function VideoPlayer(props) {
 
@@ -12,9 +12,18 @@ export default function VideoPlayer(props) {
 
   const [dimensions, setDimensions] = React.useState({});
 
+  useEffect(() => {
+    if(video) {
+      if(props.fullscreen) video.presentFullscreenPlayer();
+    }
+  }, [video])
+
+
   return (
-    
+    <View>
+    <FullScreenActionButton pressHandler={() => navigation.navigate('FullScreenVideo')} />
       <Pressable onPress={() => status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()}>
+      
       <Video
       onLayout={(event) => {
         var{x, y, heigth, width} = event.nativeEvent.layout; 
@@ -39,6 +48,7 @@ export default function VideoPlayer(props) {
         isLooping
         onPlaybackStatusUpdate={status => setStatus(() => status)}
       />
+     
     <View style={{...styles.iconContainer, marginTop: dimensions.margin}}>
      
       {!status.isPlaying ? 
@@ -52,7 +62,7 @@ export default function VideoPlayer(props) {
     </View>
 
     </Pressable>
-
+    </View>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { SafeAreaView, StyleSheet, Text, View, FlatList, Image,  } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, FlatList, Image, Pressable,  } from 'react-native';
 import Avatar from '../componets/Avatar';
 import { FloatingActionJackson } from '../componets/FloatingActionJackson';
 import { InteractionStrip } from '../componets/interactionStrip';
@@ -19,7 +19,7 @@ export const Main = ({navigation}) => {
    const data = useContext(Context);
 
     const feedData = [
-        {id: 1, text: 'this is the post number 1', picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', webLink: '', user: 'Caleb Short', avatar: ''},
+        {id: 1, text: 'this is the post number 1',  picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', webLink: '', user: 'Caleb Short', avatar: ''},
         {id: 2, text: 'this is the post number 2',  picLink: '', videoLink: '', webLink: 'http://www.google.com', user: 'Caleb Short', avatar: '' }, 
         {id: 3, text: 'this is the post number 3',  picLink: '', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
         {id: 4, text: 'this is the post number 4',  picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', webLink: '', user: 'Caleb Short', avatar: '' },
@@ -44,8 +44,9 @@ export const Main = ({navigation}) => {
            <View style={styles.otherCol}>
            <Text style={styles.textBold}>{item.user}</Text>
             <Text style={styles.text}>{item.text}</Text>
-            { item.videoLink  !== '' ? (<VideoPlayer video={item.videoLink} />) : ''}
-            {item.picLink !== '' ? <Image source={{uri: picLink}} style={styles.image} /> : ''}
+            { item.videoLink  !== '' ? 
+            (    <VideoPlayer video={item.videoLink}  /> ) : ''}
+            {item.picLink !== '' ? <Image source={{uri: item.picLink}} style={styles.image} /> : ''}
             {item.webLink !== '' ? <Weblink link={item.webLink}/> : ''}
             <InteractionStrip />
             </View>
@@ -114,6 +115,11 @@ const styles = StyleSheet.create({
     strip: {
       marginTop: 10,
       paddingTop: 10,
-    }
+    },
+    image: {
+      width: 200,
+      height: 200,
+      alignSelf: 'center'
+    },
   });
   
