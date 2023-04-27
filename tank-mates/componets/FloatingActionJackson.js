@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       right: 30,
       bottom: 30,
       backgroundColor: 'blue',
-      borderRadius: '50',
+      borderRadius: 50,
       justifyContent: 'center'
     },
     pressableStyle: {

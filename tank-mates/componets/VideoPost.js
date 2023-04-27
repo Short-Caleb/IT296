@@ -14,16 +14,14 @@ export default function VideoPlayer(props) {
 
   useEffect(() => {
     if(video) {
-      if(props.fullscreen) video.presentFullscreenPlayer();
+      if(props.fullscreen) video.current.presentFullscreenPlayer();
     }
   }, [video])
 
 
   return (
-    <View>
-    <FullScreenActionButton pressHandler={() => navigation.navigate('FullScreenVideo')} />
+    
       <Pressable onPress={() => status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()}>
-      
       <Video
       onLayout={(event) => {
         var{x, y, heigth, width} = event.nativeEvent.layout; 
@@ -60,9 +58,7 @@ export default function VideoPlayer(props) {
      : '' }
     
     </View>
-
     </Pressable>
-    </View>
   );
 }
 
@@ -90,12 +86,12 @@ const styles = StyleSheet.create({
     height: 38,
     width: 38,
     borderRadius: 19,
+    marginTop: -275,
+    zIndex: 10
   },
   playIcon: {
     marginTop: 0,
-    backgroundColor: 'white'
+    backgroundColor: 'black',
+    
   }
-
-
-
 });

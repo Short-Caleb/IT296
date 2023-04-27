@@ -12,7 +12,7 @@ import { Main } from './screens/Main';
 import { NewPost } from './screens/NewPost';
 import { Context } from './Context';
 import { FullScreenVideo } from './screens/FullScreenVideo';
-
+import {FullScreenImage} from './screens/FullScreenImage'
 
 export default function App() {
 
@@ -37,6 +37,7 @@ export default function App() {
       <Stack.Screen name='Main' component={Main} />
       <Stack.Screen name= 'NewPost' component={NewPost}/>
       <Stack.Screen name= 'FullScreenVideo' component={FullScreenVideo}/>
+      <Stack.Screen name= 'FullScreenImage' component={FullScreenImage}/>
       </Stack.Navigator>
     </NavigationContainer>
     </Context.Provider>

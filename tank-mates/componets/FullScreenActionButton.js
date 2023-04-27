@@ -11,6 +11,7 @@ export const FullScreenActionButton = ({pressHandler}) => {
     const clickHandler = () => {
         //function to handle click on floating Action Button
         alert('Floating Button Clicked');
+        console.log('handling click ')
       };
    
 
@@ -18,7 +19,7 @@ export const FullScreenActionButton = ({pressHandler}) => {
     <View style={styles.viewStyle}>
         <Pressable 
         style={styles.pressableStyle}
-        onPress={pressHandler}
+        onPress={clickHandler}
         >
       <SimpleLineIcons name="size-fullscreen" size={24} color="black" />
         

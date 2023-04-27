@@ -1,6 +1,8 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { SafeAreaView, StyleSheet, Text, View, FlatList, Image, Pressable,  } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import Avatar from '../componets/Avatar';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { FloatingActionJackson } from '../componets/FloatingActionJackson';
 import { InteractionStrip } from '../componets/interactionStrip';
 import VideoPlayer from '../componets/VideoPost';
@@ -9,31 +11,105 @@ import { Weblink } from '../componets/Weblink';
 import { useState } from 'react';
 import { Context } from '../Context';
 import { NewPost } from './NewPost';
-
+import { FullScreenActionButton } from '../componets/FullScreenActionButton';
+import { FullScreenVideo } from './FullScreenVideo';
 
 
 
 
 export const Main = ({navigation}) => {
 
-   const data = useContext(Context);
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false)
+   let data = useContext(Context);
 
-    const feedData = [
-        {id: 1, text: 'this is the post number 1',  picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', webLink: '', user: 'Caleb Short', avatar: ''},
-        {id: 2, text: 'this is the post number 2',  picLink: '', videoLink: '', webLink: 'http://www.google.com', user: 'Caleb Short', avatar: '' }, 
-        {id: 3, text: 'this is the post number 3',  picLink: '', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-        {id: 4, text: 'this is the post number 4',  picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', webLink: '', user: 'Caleb Short', avatar: '' },
-        {id: 5, text: 'this is the post number 5',  picLink: '', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-        {id: 6, text: 'this is the post number 6',  picLink: '', videoLink: '', webLink: 'http://www.espn.com', user: 'Caleb Short', avatar: '' },
-        {id: 7, text: 'this is the post number 7',  picLink: '', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-        {id: 8, text: 'this is the post number 8',  picLink: '', videoLink: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', webLink: 'http://http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', user: 'Caleb Short', avatar: '' },
-        {id: 9, text: 'this is the post number 9',  picLink: '', videoLink: '', webLink: '', user: 'Caleb Short', avatar: '' },
-      
-      
-      ];
+
+/*
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const storedData = await AsyncStorage.getItem('myData');
+        if (storedData) {
+          setData(JSON.parse(storedData));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setInitialDataLoaded(true);
+    };
+
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem('myData', JSON.stringify(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+if(!initialDataLoaded) {
+    loadData();
+  } else {
+    saveData();}
+    console.log(saveData)
+  }, [data]);
+
+  const setPostText = (item) => {
+    setData([...data, item]);
+  };*/
+
+   useEffect(() => {
+    //if initialDataLoaded  === false
+    //load data from asyncstorage 
+    //check for error if the key doesnt exist create it and store it in empty array
+    //data  = the array we load above 
+    //setinitialDataLoaded = true
+    //if initialDataLoaded === true
+    //save data to asycstorage 
+    async function getData() {
+    try{
+      const jsonValue = await AsyncStorage.getItem('@stored_posts')
+      if(jsonValue != null) {
+        data = JSON.parse(jsonValue)
+      } else {
+        const emptyValue = JSON.stringify([])
+        await AsyncStorage.setItem('@stored_posts', emptyValue)
+        data = [];
+      }
+    } catch(e) {
+      console.log('error in getting async stuff', + e.message)
+    }
+    setInitialDataLoaded(true);
+  }
+
+  async function setData() {
+    try{
+      await AsyncStorage.setItem('@stored_posts', data)
+      console.log('i stored the post its true its true');
+    } catch(e) {
+      console.log('error in the storage of the info')
+    }
+  }
+
+  if(!initialDataLoaded) {
+    getData();
+  } else { 
+    setData();
+    console.log(data)
+  }
     
-     
+   }, [data]);
 
+
+    
+     const fullScreenHandler = (item) => {
+      console.log(item);
+
+      if(item.videoLink !== '') {
+        navigation.navigate('FullScreenVideo', {video: item.videoLink})
+      }
+      if(item.picLink !== '') {
+        navigation.navigate("FullScreenImage", { image: item.picLink });
+      }
+     }
+ 
 
       const renderItem = ({item, index}) => {
         return (
@@ -44,13 +120,21 @@ export const Main = ({navigation}) => {
            <View style={styles.otherCol}>
            <Text style={styles.textBold}>{item.user}</Text>
             <Text style={styles.text}>{item.text}</Text>
+            { item.videoLink !== '' || item.picLink !== '' ? (
+                <Pressable onPress={() => fullScreenHandler(item)} style={styles.fullScreen}>
+                  <SimpleLineIcons name="size-fullscreen" size={24} color="white" />
+                </Pressable>
+                ) : '' }
             { item.videoLink  !== '' ? 
             (    <VideoPlayer video={item.videoLink}  /> ) : ''}
-            {item.picLink !== '' ? <Image source={{uri: item.picLink}} style={styles.image} /> : ''}
+            {item.picLink !== '' ? 
+            <Image source={{uri: item.picLink}} style={styles.image} /> : ''}
+           
             {item.webLink !== '' ? <Weblink link={item.webLink}/> : ''}
             <InteractionStrip />
             </View>
-             
+           
+  
           </View>
         )
       }
@@ -120,6 +204,20 @@ const styles = StyleSheet.create({
       width: 200,
       height: 200,
       alignSelf: 'center'
+    },
+    fullAction: {
+     
+    },
+    press: {
+      borderWidth: 3,
+      borderColor: 'white',
+      borderStyle: 'solid',
+      marginBottom: -10,
+      zIndex: 10
+    },
+    fullScreen: {
+      marginBottom: -20,
+      zIndex: 10,
     },
   });
   
